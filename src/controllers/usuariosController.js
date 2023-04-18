@@ -3,7 +3,6 @@ const usuariosSchema = require("../models/usuariosSchema");
 
 let usuariosController = {};
 
-/*  GET  */
 /* GET */
 
 usuariosController.obtenerUsuarios = async () => {

@@ -1,9 +1,12 @@
 const express = require("express");
 const usuariosController = require("../../controllers/usuariosController");
+const authenticateToken = require("../../middleware/jwtVerify");
+const admin = require("../../middleware/jwtAdmin");
 
 const router = express.Router();
 
-router.get("/usuarios", async (req, res) => {
+router.get("/usuarios", authenticateToken, async (req, res) => {
+  console.log("req.jwtDecodificado", req.jwtDecodificado);
   try {
     let respuesta = await usuariosController.obtenerUsuarios();
     res.json(respuesta);
@@ -22,7 +25,7 @@ router.get("/usuarioByUsername", async (req, res) => {
   }
 });
 
-router.post("/usuario", async (req, res) => {
+router.post("/usuario", admin, async (req, res) => {
   let body = req.body;
   try {
     let respuesta = await usuariosController.crearUsuario(body);
