@@ -5,8 +5,7 @@ const admin = require("../../middleware/jwtAdmin");
 
 const router = express.Router();
 
-router.get("/usuarios", authenticateToken, async (req, res) => {
-  console.log("req.jwtDecodificado", req.jwtDecodificado);
+router.get("/usuarios", async (req, res) => {
   try {
     let respuesta = await usuariosController.obtenerUsuarios();
     res.json(respuesta);
@@ -15,7 +14,7 @@ router.get("/usuarios", authenticateToken, async (req, res) => {
   }
 });
 
-router.get("/usuarioByUsername", async (req, res) => {
+router.get("/usuarioByUsername", authenticateToken, async (req, res) => {
   let username = req.query.username;
   try {
     let respuesta = await usuariosController.obtenerUsuarioByUsername(username);
